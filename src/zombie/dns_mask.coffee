@@ -65,7 +65,9 @@ class DNSMask
       delete @_domains[domain]
 
   # Alternative implementation for Node's DNS.lookup.
-  lookup: (domain, family, callback)->
+  lookup: (domain, options, callback)->
+    family = options.family
+
     # With two arguments, second argument is the callback, family is 4 or 6
     if arguments.length == 2
       [family, callback] = [null, family]
@@ -99,7 +101,7 @@ class DNSMask
         setImmediate ->
           callback(null, ipv6, 6)
         return
-    @_lookup(domain, family, callback)
+    @_lookup(domain, options, callback)
 
   # Alternative implementation for Node's DNS.resolve.
   resolve: (domain, type, callback)->
